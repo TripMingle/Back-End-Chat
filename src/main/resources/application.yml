@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: Back-End-Chat
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${database.url}
+    username: ${database.name}
+    password: ${database.password}
+  jpa:
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+  data:
+    redis:
+      host: localhost
+      port: 6379
+    mongodb:
+      host: localhost
+      port: 27017
+      uri: mongodb://localhost:27017/chat-system
+  jwt:
+    secret: ${jwt.secret-key}
+    access-token-expiration: 6000000000000
+    refresh-token-expiration: 86400000
