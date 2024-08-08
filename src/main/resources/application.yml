@@ -27,3 +27,6 @@ spring:
     secret: ${jwt.secret-key}
     access-token-expiration: 6000000000000
     refresh-token-expiration: 86400000
+jasypt:
+  encryptor:
+    password: ${jasypt.password}
