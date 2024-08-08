@@ -21,6 +21,9 @@ public enum ErrorCode {
 
 	// chat
 	CHAT_MESSAGE_SENDING_FAILED(400, "CH001", "채팅 메시지 전송에 실패하였습니다."),
+
+	// chat room user
+	INVALID_CHAT_ROOM_USER(400, "CRU001", "채팅방 유저가 유효하지 않습니다."),
 	;
 
 	final private int status;

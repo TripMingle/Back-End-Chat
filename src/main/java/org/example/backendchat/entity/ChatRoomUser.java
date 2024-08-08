@@ -44,4 +44,8 @@ public class ChatRoomUser extends BaseEntity {
 		this.chatRoomId = chatRoomId;
 		this.chatRoomType = chatRoomType;
 	}
+
+	public void changeConnectionState(boolean changeState) {
+		this.connectionState = changeState;
+	}
 }
