@@ -4,6 +4,7 @@ import org.example.backendchat.common.error.ErrorResponse;
 import org.example.backendchat.common.exception.BoardNotFoundException;
 import org.example.backendchat.common.exception.ChatMessageSendingException;
 import org.example.backendchat.common.exception.ChatRoomNotFoundException;
+import org.example.backendchat.common.exception.InvalidAccessTokenException;
 import org.example.backendchat.common.exception.InvalidGroupChatRoomException;
 import org.example.backendchat.common.exception.UserNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -48,6 +49,13 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(ChatMessageSendingException.class)
 	public ResponseEntity<ErrorResponse> handleChatMessageSendingException(ChatMessageSendingException ex) {
 		log.error("handleChatMessageSendingException", ex);
+		final ErrorResponse response = new ErrorResponse(ex.getErrorCode());
+		return new ResponseEntity<>(response, HttpStatus.valueOf(ex.getErrorCode().getStatus()));
+	}
+
+	@ExceptionHandler(InvalidAccessTokenException.class)
+	public ResponseEntity<ErrorResponse> handleInvalidAccessTokenException(InvalidAccessTokenException ex) {
+		log.error("handleInvalidAccessTokenException", ex);
 		final ErrorResponse response = new ErrorResponse(ex.getErrorCode());
 		return new ResponseEntity<>(response, HttpStatus.valueOf(ex.getErrorCode().getStatus()));
 	}

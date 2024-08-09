@@ -24,6 +24,9 @@ public enum ErrorCode {
 
 	// chat room user
 	INVALID_CHAT_ROOM_USER(400, "CRU001", "채팅방 유저가 유효하지 않습니다."),
+
+	// auth
+	ACCESS_TOKEN_NOT_FOUND(404, "AT001", "액세스토큰을 입력받지 못했습니다.")
 	;
 
 	final private int status;
