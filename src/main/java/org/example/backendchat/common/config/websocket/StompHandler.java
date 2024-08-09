@@ -15,15 +15,12 @@ import org.example.backendchat.entity.ChatRoomType;
 import org.example.backendchat.entity.ChatRoomUser;
 import org.example.backendchat.entity.User;
 import org.example.backendchat.user.UserRepository;
-import org.springframework.boot.autoconfigure.context.PropertyPlaceholderAutoConfiguration;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.messaging.support.ChannelInterceptor;
 import org.springframework.stereotype.Component;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,8 +36,6 @@ public class StompHandler implements ChannelInterceptor {
 	private final ChatRoomUserRepository chatRoomUserRepository;
 	private final ChatRoomRedisRepository chatRoomRedisRepository;
 	private final UserRepository userRepository;
-	private final ObjectMapper objectMapper;
-	private final PropertyPlaceholderAutoConfiguration propertyPlaceholderAutoConfiguration;
 
 	@Override
 	public Message<?> preSend(Message<?> message, MessageChannel channel) {
