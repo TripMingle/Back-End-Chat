@@ -33,7 +33,7 @@ public class RedisSubscriber implements MessageListener {
 			String publishedMessage = redisTemplate.getStringSerializer().deserialize(message.getBody());
 			EncryptedChatMessageDTO encryptedChatMessageDTO = objectMapper.readValue(publishedMessage, EncryptedChatMessageDTO.class);
 			ChatMessageDTO chatMessageDTO = messageCryptUtils.decryptChatMessage(encryptedChatMessageDTO);
-			messageTemplate.convertAndSend("/sub/chat/room/" + chatMessageDTO.getChatRoomType().getType() + chatMessageDTO.getChatRoomId(), chatMessageDTO);
+			messageTemplate.convertAndSend("/sub/chat/room/" + chatMessageDTO.getChatRoomType().getType() + "/" + chatMessageDTO.getChatRoomId(), chatMessageDTO);
 		} catch (Exception e) {
 			throw new ChatMessageSendingException("Failed to send chat message", CHAT_MESSAGE_SENDING_FAILED);
 		}

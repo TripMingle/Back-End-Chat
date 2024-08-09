@@ -36,7 +36,7 @@ public class ChatService {
 			.sendingTime(LocalDateTime.now().toString())
 			.build();
 		ChannelTopic channelTopic = new ChannelTopic(
-			chatMessageDTO.getChatRoomType().getType() + chatMessageDTO.getChatRoomId().toString());
+			chatMessageDTO.getChatRoomType().getType() + "/" + chatMessageDTO.getChatRoomId().toString());
 		redisMessageListenerContainer.addMessageListener(redisSubscriber, channelTopic);
 		saveChatMessageWithAsync(chatMessage);
 		EncryptedChatMessageDTO encryptedChatMessageDTO = messageCryptUtils.encryptChatMessage(chatMessageDTO);
