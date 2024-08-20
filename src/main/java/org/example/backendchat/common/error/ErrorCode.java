@@ -21,9 +21,11 @@ public enum ErrorCode {
 
 	// chat
 	CHAT_MESSAGE_SENDING_FAILED(400, "CH001", "채팅 메시지 전송에 실패하였습니다."),
+	ALREADY_EXISTS_CHAT_ROOM(400, "CR002", "해당 채팅방은 이미 존재합니다."),
 
 	// chat room user
 	INVALID_CHAT_ROOM_USER(400, "CRU001", "채팅방 유저가 유효하지 않습니다."),
+	USER_IN_CHAT_ROOM_NOT_FOUND(404, "CRU001", "해당 채팅방에 유저를 찾을 수 없습니다."),
 
 	// auth
 	ACCESS_TOKEN_NOT_FOUND(404, "AT001", "액세스토큰을 입력받지 못했습니다.")

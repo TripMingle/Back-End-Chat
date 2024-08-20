@@ -26,4 +26,7 @@ public class BaseEntity {
     public void delete() {
         this.isDeleted = true;
     }
+    public void revive() {
+        this.isDeleted = false;
+    }
 }

@@ -38,14 +38,25 @@ public class ChatRoomUser extends BaseEntity {
 
 	private boolean connectionState;
 
+	private Long chatFirstIndex;
+
 	@Builder
-	public ChatRoomUser(User user, Long chatRoomId, ChatRoomType chatRoomType) {
+	public ChatRoomUser(User user, Long chatRoomId, ChatRoomType chatRoomType, Long chatFirstIndex) {
 		this.user = user;
 		this.chatRoomId = chatRoomId;
 		this.chatRoomType = chatRoomType;
+		this.chatFirstIndex = chatFirstIndex;
 	}
 
 	public void changeConnectionState(boolean changeState) {
 		this.connectionState = changeState;
+	}
+
+	public void exitChatRoom() {
+		delete();
+	}
+
+	public void reviveUser() {
+		revive();
 	}
 }

@@ -2,9 +2,9 @@ package org.example.backendchat.common.config.websocket;
 
 import static org.example.backendchat.common.error.ErrorCode.*;
 
-import org.example.backendchat.chatroom.ChatRoomRedisRepository;
-import org.example.backendchat.chatroom.GroupChatRoomRepository;
-import org.example.backendchat.chatroom.OneOnOneChatRoomRepository;
+import org.example.backendchat.chatroom.repository.ChatRoomRedisRepository;
+import org.example.backendchat.chatroom.repository.GroupChatRoomRepository;
+import org.example.backendchat.chatroom.repository.OneOnOneChatRoomRepository;
 import org.example.backendchat.chatroomuser.ChatRoomUserRepository;
 import org.example.backendchat.common.exception.ChatRoomNotFoundException;
 import org.example.backendchat.common.exception.InvalidAccessTokenException;
@@ -44,7 +44,7 @@ public class StompHandler implements ChannelInterceptor {
 			String rawAccessToken = accessor.getFirstNativeHeader("Authorization");
 			validateNullAccessToken(rawAccessToken);
 			String accessToken = jwtUtils.parsingAccessToken(rawAccessToken);
-			String sessionId = (String) accessor.getHeader("simpSessionId");
+			String sessionId = (String)accessor.getHeader("simpSessionId");
 			chatRoomRedisRepository.saveUserToken(sessionId, accessToken);
 			jwtUtils.validateToken(accessToken);
 			log.info("CONNECT");
@@ -57,17 +57,22 @@ public class StompHandler implements ChannelInterceptor {
 			User user = userRepository.findByEmail(jwtUtils.getEmail(accessToken))
 				.orElseThrow(() -> new UserNotFoundException("User Not Found", USER_NOT_FOUND));
 			validateExistedChatRoom(chatRoomType, chatRoomId);
-			ChatRoomUser chatRoomUser = chatRoomUserRepository.findByChatRoomIdAndChatRoomTypeAndUserId(chatRoomId, chatRoomType, user.getId())
+			ChatRoomUser chatRoomUser = chatRoomUserRepository.findByChatRoomIdAndChatRoomTypeAndUserId(chatRoomId,
+					chatRoomType, user.getId())
 				.orElseThrow(() -> new InvalidChatRoomUserException("Invalid ChatRoom User", INVALID_CHAT_ROOM_USER));
 			chatRoomUser.changeConnectionState(true);
 			chatRoomUserRepository.save(chatRoomUser);
-			ChatRoomUserForRedisHash chatRoomUserForRedisHash = convertChatRoomUserToChatRoomUserForRedisHash(chatRoomUser);
+			ChatRoomUserForRedisHash chatRoomUserForRedisHash = convertChatRoomUserToChatRoomUserForRedisHash(
+				chatRoomUser);
 			chatRoomRedisRepository.saveUserChatRoomEnterInfo(userSessionId, chatRoomUserForRedisHash);
 			log.info("SUBSCRIBE");
 		} else if (StompCommand.DISCONNECT.equals(accessor.getCommand())) {
 			String sessionId = accessor.getSessionId();
-			ChatRoomUserForRedisHash chatRoomUserForRedisHash = chatRoomRedisRepository.getUserChatRoomEnterInfo(sessionId);
-			ChatRoomUser chatRoomUser = chatRoomUserRepository.findByChatRoomIdAndChatRoomTypeAndUserId(chatRoomUserForRedisHash.getChatRoomId(), chatRoomUserForRedisHash.getChatRoomType(), chatRoomUserForRedisHash.getUserId())
+			ChatRoomUserForRedisHash chatRoomUserForRedisHash = chatRoomRedisRepository.getUserChatRoomEnterInfo(
+				sessionId);
+			ChatRoomUser chatRoomUser = chatRoomUserRepository.findByChatRoomIdAndChatRoomTypeAndUserId(
+					chatRoomUserForRedisHash.getChatRoomId(), chatRoomUserForRedisHash.getChatRoomType(),
+					chatRoomUserForRedisHash.getUserId())
 				.orElseThrow(() -> new InvalidChatRoomUserException("Invalid ChatRoom User", INVALID_CHAT_ROOM_USER));
 			chatRoomUser.changeConnectionState(false);
 			chatRoomUserRepository.save(chatRoomUser);
@@ -79,9 +84,11 @@ public class StompHandler implements ChannelInterceptor {
 
 	private void validateExistedChatRoom(ChatRoomType chatRoomType, Long chatRoomId) {
 		if (chatRoomType == ChatRoomType.GROUP) {
-			groupChatRoomRepository.findById(chatRoomId).orElseThrow(() -> new ChatRoomNotFoundException("ChatRoom not found", CHAT_ROOM_NOT_FOUND));
+			groupChatRoomRepository.findById(chatRoomId)
+				.orElseThrow(() -> new ChatRoomNotFoundException("ChatRoom not found", CHAT_ROOM_NOT_FOUND));
 		} else if (chatRoomType == ChatRoomType.ONE_ON_ONE) {
-			oneOnOneChatRoomRepository.findById(chatRoomId).orElseThrow(() ->  new ChatRoomNotFoundException("ChatRoom not found", CHAT_ROOM_NOT_FOUND));
+			oneOnOneChatRoomRepository.findById(chatRoomId)
+				.orElseThrow(() -> new ChatRoomNotFoundException("ChatRoom not found", CHAT_ROOM_NOT_FOUND));
 		} else {
 			throw new IllegalArgumentException("ChatRoomType not found");
 		}

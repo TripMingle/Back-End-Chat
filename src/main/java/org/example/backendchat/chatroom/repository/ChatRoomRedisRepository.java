@@ -1,4 +1,4 @@
-package org.example.backendchat.chatroom;
+package org.example.backendchat.chatroom.repository;
 
 import org.example.backendchat.common.config.websocket.ChatRoomUserForRedisHash;
 import org.springframework.data.redis.core.HashOperations;
