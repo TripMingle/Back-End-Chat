@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/chat-room")
+@RequestMapping("/chat-rooms")
 public class ChatRoomController {
 
 	private final ChatRoomService chatRoomService;
@@ -42,7 +42,6 @@ public class ChatRoomController {
 			enterGroupChatRoomReqDTO);
 		return ResponseEntity.ok(ResultResponse.of(ResultCode.USER_ENTER_CHAT_ROOM_SUCCESS, enterGroupChatRoomResDTO));
 	}
-
 
 	@PatchMapping("/group/exit")
 	public ResponseEntity<ResultResponse> exitGroupChatRoom(
