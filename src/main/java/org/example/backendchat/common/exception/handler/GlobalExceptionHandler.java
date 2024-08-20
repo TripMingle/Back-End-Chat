@@ -1,9 +1,11 @@
 package org.example.backendchat.common.exception.handler;
 
 import org.example.backendchat.common.error.ErrorResponse;
+import org.example.backendchat.common.exception.AlreadyExistsChatRoomException;
 import org.example.backendchat.common.exception.BoardNotFoundException;
 import org.example.backendchat.common.exception.ChatMessageSendingException;
 import org.example.backendchat.common.exception.ChatRoomNotFoundException;
+import org.example.backendchat.common.exception.ChatRoomUserNotFoundException;
 import org.example.backendchat.common.exception.InvalidAccessTokenException;
 import org.example.backendchat.common.exception.InvalidGroupChatRoomException;
 import org.example.backendchat.common.exception.UserNotFoundException;
@@ -56,6 +58,20 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(InvalidAccessTokenException.class)
 	public ResponseEntity<ErrorResponse> handleInvalidAccessTokenException(InvalidAccessTokenException ex) {
 		log.error("handleInvalidAccessTokenException", ex);
+		final ErrorResponse response = new ErrorResponse(ex.getErrorCode());
+		return new ResponseEntity<>(response, HttpStatus.valueOf(ex.getErrorCode().getStatus()));
+	}
+
+	@ExceptionHandler(AlreadyExistsChatRoomException.class)
+	public ResponseEntity<ErrorResponse> handleAlreadyExistsChatRoomException(AlreadyExistsChatRoomException ex) {
+		log.error("handleAlreadyExistsChatRoomException", ex);
+		final ErrorResponse response = new ErrorResponse(ex.getErrorCode());
+		return new ResponseEntity<>(response, HttpStatus.valueOf(ex.getErrorCode().getStatus()));
+	}
+
+	@ExceptionHandler(ChatRoomUserNotFoundException.class)
+	public ResponseEntity<ErrorResponse> handleChatRoomUserNotFoundException(ChatRoomUserNotFoundException ex) {
+		log.error("handleChatRoomUserNotFoundException", ex);
 		final ErrorResponse response = new ErrorResponse(ex.getErrorCode());
 		return new ResponseEntity<>(response, HttpStatus.valueOf(ex.getErrorCode().getStatus()));
 	}
