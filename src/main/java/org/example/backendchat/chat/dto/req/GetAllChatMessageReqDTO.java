@@ -1,4 +1,4 @@
-package org.example.backendchat.chatroom.dto.req;
+package org.example.backendchat.chat.dto.req;
 
 import lombok.Builder;
 import lombok.Getter;

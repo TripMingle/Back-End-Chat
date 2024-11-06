@@ -3,9 +3,9 @@ package org.example.backendchat.chat;
 import static org.example.backendchat.common.constants.Constants.*;
 import static org.example.backendchat.common.result.ResultCode.*;
 
-import org.example.backendchat.chat.dto.ChatMessageDTO;
-import org.example.backendchat.chatroom.dto.req.GetAllChatMessageReqDTO;
-import org.example.backendchat.chatroom.dto.res.GetAllChatMessagesResDTO;
+import org.example.backendchat.chat.dto.etc.ChatMessageDTO;
+import org.example.backendchat.chat.dto.req.GetAllChatMessageReqDTO;
+import org.example.backendchat.chat.dto.res.GetAllChatMessagesResDTO;
 import org.example.backendchat.common.result.ResultResponse;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

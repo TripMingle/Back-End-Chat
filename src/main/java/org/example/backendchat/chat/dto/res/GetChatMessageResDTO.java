@@ -1,4 +1,4 @@
-package org.example.backendchat.chatroom.dto.res;
+package org.example.backendchat.chat.dto.res;
 
 import lombok.Builder;
 import lombok.Getter;

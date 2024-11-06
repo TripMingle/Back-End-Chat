@@ -6,13 +6,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.example.backendchat.chat.dto.ChatMessageDTO;
-import org.example.backendchat.chat.dto.EncryptedChatMessageDTO;
-import org.example.backendchat.chatroom.dto.req.GetAllChatMessageReqDTO;
-import org.example.backendchat.chatroom.dto.res.GetAllChatMessagesResDTO;
-import org.example.backendchat.chatroom.dto.res.GetChatMessageResDTO;
+import org.example.backendchat.chat.dto.etc.ChatMessageDTO;
+import org.example.backendchat.chat.dto.req.GetAllChatMessageReqDTO;
+import org.example.backendchat.chat.dto.res.GetAllChatMessagesResDTO;
+import org.example.backendchat.chat.dto.res.GetChatMessageResDTO;
 import org.example.backendchat.common.exception.UserNotFoundException;
-import org.example.backendchat.common.utils.MessageCryptUtils;
 import org.example.backendchat.entity.ChatMessage;
 import org.example.backendchat.entity.ChatRoomType;
 import org.example.backendchat.redis.RedisSubscriber;
@@ -38,8 +36,8 @@ public class ChatService {
 	private final RedisTemplate<String, Object> redisTemplate;
 	private final RedisSubscriber redisSubscriber;
 	private final RedisMessageListenerContainer redisMessageListenerContainer;
-	private final MessageCryptUtils messageCryptUtils;
 
+	// 메시지 전송
 	public void sendMessage(ChatMessageDTO chatMessageDTO) {
 		ChatMessage chatMessage = ChatMessage.builder()
 			.message(chatMessageDTO.getMessage())
@@ -52,15 +50,16 @@ public class ChatService {
 			chatMessageDTO.getChatRoomType().getType() + "/" + chatMessageDTO.getChatRoomId().toString());
 		redisMessageListenerContainer.addMessageListener(redisSubscriber, channelTopic);
 		saveChatMessageWithAsync(chatMessage);
-		EncryptedChatMessageDTO encryptedChatMessageDTO = messageCryptUtils.encryptChatMessage(chatMessageDTO);
-		redisTemplate.convertAndSend(channelTopic.getTopic(), encryptedChatMessageDTO);
+		redisTemplate.convertAndSend(channelTopic.getTopic(), chatMessageDTO);
 	}
 
+	// 메시지 저장 비동기
 	@Async
 	public void saveChatMessageWithAsync(ChatMessage chatMessage) {
 		chatMongoRepository.save(chatMessage);
 	}
 
+	// 메시지 조회
 	public GetAllChatMessagesResDTO getChatMessages(GetAllChatMessageReqDTO getAllChatMessageReqDTO,
 		Pageable pageable) {
 		Slice<ChatMessage> chatMessages = chatMongoRepository.findAllByChatRoomIdAndChatRoomType(

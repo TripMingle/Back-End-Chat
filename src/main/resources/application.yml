@@ -23,10 +23,3 @@ spring:
       host: localhost
       port: 27017
       uri: mongodb://localhost:27017/chat-system
-  jwt:
-    secret: ${jwt.secret-key}
-    access-token-expiration: 6000000000000
-    refresh-token-expiration: 86400000
-jasypt:
-  encryptor:
-    password: ${jasypt.password}
