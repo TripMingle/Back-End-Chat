@@ -1,4 +1,4 @@
-package org.example.backendchat.entity;
+package org.example.backendchat.application.entity;
 
 import org.example.backendchat.common.entity.BaseEntity;
 import org.hibernate.annotations.Where;
@@ -18,23 +18,23 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Where(clause = "is_deleted = false")
-public class GroupChatRoom extends BaseEntity {
+public class OneOnOneChatRoom extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@OneToOne
-	@JoinColumn(name = "board_id", nullable = false)
-	private Board board;
+	@JoinColumn(name = "user1_id", referencedColumnName = "id")
+	private User user1;
 
 	@OneToOne
-	@JoinColumn(name = "user_id", nullable = false)
-	private User user;
+	@JoinColumn(name = "user2_id", referencedColumnName = "id")
+	private User user2;
 
 	@Builder
-	public GroupChatRoom(Board board, User user) {
-		this.board = board;
-		this.user = user;
+	public OneOnOneChatRoom(User user1, User user2) {
+		this.user1 = user1;
+		this.user2 = user2;
 	}
 }

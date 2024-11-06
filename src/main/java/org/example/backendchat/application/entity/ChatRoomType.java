@@ -1,4 +1,4 @@
-package org.example.backendchat.entity;
+package org.example.backendchat.application.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

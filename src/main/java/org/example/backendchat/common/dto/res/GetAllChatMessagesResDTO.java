@@ -1,4 +1,4 @@
-package org.example.backendchat.chat.dto.res;
+package org.example.backendchat.common.dto.res;
 
 import java.util.List;
 

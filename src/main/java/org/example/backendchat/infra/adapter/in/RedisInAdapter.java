@@ -1,8 +1,8 @@
-package org.example.backendchat.redis;
+package org.example.backendchat.infra.adapter.in;
 
 import static org.example.backendchat.common.error.ErrorCode.*;
 
-import org.example.backendchat.chat.dto.etc.ChatMessageDTO;
+import org.example.backendchat.common.dto.etc.ChatMessageDTO;
 import org.example.backendchat.common.exception.ChatMessageSendingException;
 import org.springframework.data.redis.connection.Message;
 import org.springframework.data.redis.connection.MessageListener;
@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class RedisSubscriber implements MessageListener {
+public class RedisInAdapter implements MessageListener {
 
 	private final SimpMessageSendingOperations messageTemplate;
 	private final ObjectMapper objectMapper;

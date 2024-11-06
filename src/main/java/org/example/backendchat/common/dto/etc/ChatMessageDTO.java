@@ -1,6 +1,6 @@
-package org.example.backendchat.chat.dto.etc;
+package org.example.backendchat.common.dto.etc;
 
-import org.example.backendchat.entity.ChatRoomType;
+import org.example.backendchat.application.entity.ChatRoomType;
 
 import lombok.Getter;
 import lombok.Setter;

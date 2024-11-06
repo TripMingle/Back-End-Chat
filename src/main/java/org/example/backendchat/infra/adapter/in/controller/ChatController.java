@@ -1,11 +1,12 @@
-package org.example.backendchat.chat;
+package org.example.backendchat.infra.adapter.in.controller;
 
 import static org.example.backendchat.common.constants.Constants.*;
 import static org.example.backendchat.common.result.ResultCode.*;
 
-import org.example.backendchat.chat.dto.etc.ChatMessageDTO;
-import org.example.backendchat.chat.dto.req.GetAllChatMessageReqDTO;
-import org.example.backendchat.chat.dto.res.GetAllChatMessagesResDTO;
+import org.example.backendchat.application.port.in.ChatInPort;
+import org.example.backendchat.common.dto.etc.ChatMessageDTO;
+import org.example.backendchat.common.dto.req.GetAllChatMessageReqDTO;
+import org.example.backendchat.common.dto.res.GetAllChatMessagesResDTO;
 import org.example.backendchat.common.result.ResultResponse;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -24,11 +25,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ChatController {
 
-	private final ChatService chatService;
+	private final ChatInPort chatInPort;
 
 	@MessageMapping("/chat/message")
 	public void sendMessage(@RequestBody ChatMessageDTO chatMessageDTO) {
-		chatService.sendMessage(chatMessageDTO);
+		chatInPort.sendMessage(chatMessageDTO);
 	}
 
 	@GetMapping("/chat-rooms/{chatRoomId}/messages")
@@ -39,7 +40,7 @@ public class ChatController {
 			.chatRoomId(chatRoomId)
 			.chatRoomType(type)
 			.build();
-		GetAllChatMessagesResDTO chatMessages = chatService.getChatMessages(getAllChatMessageReqDTO, pageable);
+		GetAllChatMessagesResDTO chatMessages = chatInPort.getChatMessages(getAllChatMessageReqDTO, pageable);
 		return ResponseEntity.ok(ResultResponse.of(GET_ALL_CHAT_MESSAGES, chatMessages));
 	}
 }

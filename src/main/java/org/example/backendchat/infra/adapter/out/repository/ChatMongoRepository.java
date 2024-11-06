@@ -1,7 +1,7 @@
-package org.example.backendchat.chat;
+package org.example.backendchat.infra.adapter.out.repository;
 
-import org.example.backendchat.entity.ChatMessage;
-import org.example.backendchat.entity.ChatRoomType;
+import org.example.backendchat.application.entity.ChatMessage;
+import org.example.backendchat.application.entity.ChatRoomType;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.mongodb.repository.MongoRepository;

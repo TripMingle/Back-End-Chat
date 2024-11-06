@@ -1,4 +1,4 @@
-package org.example.backendchat.entity;
+package org.example.backendchat.application.entity;
 
 import java.time.LocalDate;
 
@@ -35,7 +35,7 @@ public class Board extends BaseEntity {
 
 	private String title;
 
-	@Column(columnDefinition="TEXT")
+	@Column(columnDefinition = "TEXT")
 	private String content;
 
 	private String continent;

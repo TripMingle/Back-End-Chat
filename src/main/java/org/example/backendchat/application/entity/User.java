@@ -1,4 +1,4 @@
-package org.example.backendchat.entity;
+package org.example.backendchat.application.entity;
 
 import org.example.backendchat.common.entity.BaseEntity;
 
@@ -8,7 +8,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

@@ -1,4 +1,4 @@
-package org.example.backendchat.entity;
+package org.example.backendchat.application.entity;
 
 import org.example.backendchat.common.entity.BaseEntity;
 import org.hibernate.annotations.Where;
